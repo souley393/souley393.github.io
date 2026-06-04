@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Souley393 | Cyber Home Lab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0e14;
+      --surface: #0f1620;
+      --border: #1a2a3a;
+      --accent: #00d4ff;
+      --accent2: #00ff88;
+      --text: #c9d1d9;
+      --muted: #4a5568;
+      --danger: #ff4757;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glow orb */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,14,20,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--accent);
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+    }
+
+    .nav-logo span { color: var(--accent2); }
+
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .status-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--accent2);
+      border-radius: 50%;
+      margin-right: 6px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,255,136,0.4); }
+      50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(0,255,136,0); }
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-tag::before {
+      content: '//';
+      color: var(--muted);
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 .line1 { color: var(--text); }
+    h1 .line2 {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .stat { text-align: left; }
+    .stat-num {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 2rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      border-radius: 4px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 700;
+    }
+    .btn-primary:hover {
+      background: #00b8d9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(0,212,255,0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+    .btn-outline:hover {
+      background: rgba(0,212,255,0.08);
+      transform: translateY(-1px);
+    }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* Section */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 2rem 4rem;
+    }
+
+    .section-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent2);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2rem;
+      letter-spacing: -0.5px;
+    }
+
+    /* Stack cards */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .stack-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .stack-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .stack-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .stack-name {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+    .stack-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+
+    /* Posts */
+    .posts-list { display: flex; flex-direction: column; gap: 1rem; }
+
+    .post-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .post-card:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .post-meta {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .post-tag {
+      background: rgba(0,212,255,0.1);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+    }
+
+    .post-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .post-excerpt { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+    .post-arrow {
+      color: var(--accent);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      margin-top: 0.8rem;
+      display: inline-block;
+    }
+
+    /* About */
+    .about-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent2);
+      border-radius: 8px;
+      padding: 2rem;
+    }
+
+    .about-box p {
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .about-box p:last-child { margin-bottom: 0; }
+
+    .highlight { color: var(--accent); font-family: 'Share Tech Mono', monospace; }
+    .highlight2 { color: var(--accent2); }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.6s ease forwards;
+    }
+    .fade-in:nth-child(1) { animation-delay: 0.1s; }
+    .fade-in:nth-child(2) { animation-delay: 0.2s; }
+    .fade-in:nth-child(3) { animation-delay: 0.3s; }
+    .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .hero-stats { gap: 1.5rem; }
+      .nav-links { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">souley393<span>.github.io</span></div>
+  <div class="nav-links">
+    <a href="#posts">Posts</a>
+    <a href="#stack">Stack</a>
+    <a href="#about">About</a>
+    <a href="https://github.com/souley393" target="_blank">GitHub</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag fade-in"><span class="status-dot"></span> Lab is active</div>
+  <h1 class="fade-in">
+    <div class="line1">Cyber Home Lab</div>
+    <div class="line2">Blue Team Journal</div>
+  </h1>
+  <p class="hero-desc fade-in">
+    Documenting my hands-on journey in building a real-world SOC environment —
+    SIEM setup, log analysis, threat detection, and everything in between.
+  </p>
+  <div class="hero-stats fade-in">
+    <div class="stat">
+      <div class="stat-num">01</div>
+      <div class="stat-label">Posts</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2</div>
+      <div class="stat-label">VMs Running</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Things to learn</div>
+    </div>
+  </div>
+  <div class="hero-btns fade-in">
+    <a href="#posts" class="btn btn-primary">→ Read Posts</a>
+    <a href="https://github.com/souley393" class="btn btn-outline" target="_blank">GitHub Profile</a>
+  </div>
+</div>
+
+<!-- Posts -->
+<section id="posts">
+  <div class="section-label">// latest writeups</div>
+  <h2>Lab Posts</h2>
+  <div class="posts-list">
+    <a href="posts/siem-elasticsearch-setup.html" class="post-card">
+      <div class="post-meta">
+        <span>2026-06-03</span>
+        <span class="post-tag">SIEM</span>
+        <span class="post-tag">Elasticsearch</span>
+      </div>
+      <div class="post-title">Building a Home SIEM: Elasticsearch & Kibana Setup</div>
+      <div class="post-excerpt">
+        How I deployed Elasticsearch and Kibana on an Ubuntu VM, fought through authentication errors,
+        reset credentials, and got the full stack running on my home lab network.
+      </div>
+      <div class="post-arrow">Read more →</div>
+    </a>
+  </div>
+</section>
+
+<!-- Stack -->
+<section id="stack">
+  <div class="section-label">// tools & tech</div>
+  <h2>Lab Stack</h2>
+  <div class="stack-grid">
+    <div class="stack-card">
+      <div class="stack-icon">🖥️</div>
+      <div class="stack-name">VMware</div>
+      <div class="stack-desc">Hypervisor running all lab VMs on dedicated SSD</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-icon">🐧</div>
+      <div class="stack-name">Ubuntu Server</div>
+      <div class="stack-desc">SIEM host — soc-lab / siem-server VM</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-icon">🪟</div>
+      <div class="stack-name">Windows Server</div>
+      <div class="stack-desc">Target machine with Sysmon64 for event logging</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-icon">📊</div>
+      <div class="stack-name">Elasticsearch</div>
+      <div class="stack-desc">Search & analytics engine at the core of the SIEM</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-icon">📈</div>
+      <div class="stack-name">Kibana</div>
+      <div class="stack-desc">Dashboard & visualization for log analysis</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-icon">🔍</div>
+      <div class="stack-name">Sysmon</div>
+      <div class="stack-desc">Windows telemetry — process, network, file events</div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="section-label">// who is this</div>
+  <h2>About</h2>
+  <div class="about-box">
+    <p>
+      I'm <span class="highlight">souley393</span>, a self-taught cybersecurity enthusiast building a
+      <span class="highlight2">home SOC lab</span> from the ground up. This blog documents the real process —
+      the configs that break, the errors that don't make sense, and the moments when things finally click.
+    </p>
+    <p>
+      My focus is <span class="highlight2">blue team</span> — log analysis, SIEM engineering, threat detection,
+      and security monitoring. Everything here is hands-on, self-built, and learned the hard way.
+    </p>
+    <p>
+      No fluff. Just lab notes.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>souley393.github.io &nbsp;·&nbsp; Built with GitHub Pages &nbsp;·&nbsp;
+  <a href="https://github.com/souley393" target="_blank">github.com/souley393</a></p>
+</footer>
+
+</body>
+</html>
