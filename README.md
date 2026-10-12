@@ -10,9 +10,9 @@ The first part of the project focuses on networking. I configured a host-only ne
 I also ran into connectivity issues along the way. Rather than leave those out, I'm documenting what went wrong and how I fixed it.
 This project is still in progress, and I'll update it as I complete each stage.
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin&style=flat-square)]([https://linkedin.com](https://www.linkedin.com/in/bamba393/))
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?logo=linkedin&style=flat-square)]([https://www.linkedin.com/in/bamba393/])
 [![TikTok](https://img.shields.io/badge/TikTok-@zozobe48-black?logo=tiktok&style=flat-square)](https://www.tiktok.com/@zozobe48)
 [![Security+](https://img.shields.io/badge/CompTIA-Security%2B-red?logo=comptia&style=flat-square)](https://www.credly.com/badges/6d967d1b-6b6f-4fc0-b2f3-b4bc57c228bc/linked_in_profile)
 ### 📬 Connect With Me
-* **LinkedIn:** [linkedin.com/in/your-profile]([https://linkedin.com](https://www.linkedin.com/in/bamba393/))
+* **LinkedIn:** [linkedin.com/in/your-profile](https://www.linkedin.com/in/bamba393/)
 * **Portfolio / Site:** [souley393.github.io](https://souley393.github.io)
