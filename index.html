@@ -5,6 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Souley393 | Cyber Home Lab</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <!-- Private GA4 analytics. Use ?analytics_optout=1 on your own browser to disable tracking. -->
+  <script>
+    (function () {
+      var key = 'souley393_analytics_optout';
+      var params = new URLSearchParams(window.location.search);
+      var preference = params.get('analytics_optout');
+
+      try {
+        if (preference === '1') localStorage.setItem(key, '1');
+        if (preference === '0') localStorage.removeItem(key);
+      } catch (error) {
+        // If browser storage is blocked, the URL opt-out still works for this page.
+      }
+
+      var optedOut = preference === '1';
+      try {
+        if (preference !== '0' && localStorage.getItem(key) === '1') optedOut = true;
+      } catch (error) {}
+
+      if (optedOut) return;
+
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', 'G-RCY4VRRNR0');
+
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-RCY4VRRNR0';
+      document.head.appendChild(script);
+    })();
+  </script>
   <style>
     :root {
       --bg: #0a0e14;
